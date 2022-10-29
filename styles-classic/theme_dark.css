@@ -1,0 +1,105 @@
+#links {
+    color: #fff;
+    background-color: #111;
+}
+#links > a {
+    color: #fff;
+    border: 1px solid white;
+}
+#safeo, #safeu, .navbar, .tabbar {
+    -webkit-backdrop-filter: saturate(180%) blur(50pt);
+    backdrop-filter: saturate(180%) blur(50pt);
+    background-color: rgba(17, 17, 17, 0.25);
+}
+.navbar {
+    border-bottom: 1pt solid rgba(85, 85, 85, 0.75);
+}
+.tabbar {
+    border-top: 1pt solid rgba(85, 85, 85, 0.75);
+}
+@media screen and (pointer: fine) {
+    body {
+        background-color: #111;
+        color: #ddd;
+    }
+    .sprow > td, .sprow > th {
+        border: 2px solid #bbb;
+    }
+    .sprow > th, .std {
+        background-color: #151515;
+    }
+    .sprow > th.today {
+        background-color: #1c1c1c;
+    }
+    #stundenplan, #fachform {
+        background-color: #020202;
+    }
+    input, button, select, #filel {
+        background-color: #151515;
+        color: #ddd;
+    }
+    .gp {
+        background-color: #111;
+    }
+    #econtent {
+        background-color: #0000006b;
+    }
+    .mt {
+        background-color: #000000c2 !important;
+    }
+    #hcontent, #settingscont {
+        background-color: #0000006b;
+    }
+    #loginform {
+        background-color: #0000006b;
+    }
+    #spu {
+        background-color: #000000ab;
+    }
+    #filel {
+        background-color: #151515;
+    }
+    .stundeselction:hover {
+        background-color: rgb(51, 51, 51);
+    }
+    .stundeselction {
+        background-color: rgb(34, 34, 34);
+    }
+    .selt {
+        background-color: rgb(24, 24, 24);
+    }
+}
+
+/*########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+########################################################################*/
+
+@media only screen and (pointer: coarse) {
+    body, #safeo, #safeu {
+        background-color: #111;
+        color: #ddd;
+    }
+    .sprow > td:not(.std):not(.gp) {
+        background-color: #222;
+    }
+    .sprow > th.today {
+        background-color: #1c1c1c;
+    }
+    #stundenplan {
+        background-color: #020202;
+        color: #bbb;
+    }
+    input, button, select, #filel {
+        background-color: #151515;
+        color: #ddd;
+    }
+    .gp, #econtent, #hcontent, #settingscont, #loginform, #spu {
+        background-color: rgb(8, 8, 8);
+    }
+    #filel, #file {
+        background-color: #151515;
+    }
+}

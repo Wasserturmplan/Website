@@ -1,0 +1,88 @@
+#links {
+    color: #000;
+    background-color: rgb(172, 172, 172);
+}
+#links > a {
+    color: #000;
+    border: 1px solid rgb(0, 0, 0);
+}
+@media screen and (pointer: fine) {
+    body, #safeo, #safeu {
+        background-color: rgb(172, 172, 172);
+        color: rgb(21, 21, 21);
+    }
+    .sprow > td, .sprow > th {
+        border: 2px solid #bbb;
+    }
+    .sprow > th, .std {
+        background-color: #e6e6e6;
+    }
+    .sprow > th.today {
+        background-color: #dadada;
+    }
+    #stundenplan, #fachform {
+        background-color: #fafafa;
+    }
+    input, button, select, #filel {
+        background-color: #e4e4e4;
+        color: rgb(18, 18, 18);
+    }
+    .gp {
+        background-color: rgb(242, 242, 242);
+    }
+    #econtent, #hcontent, #settingscont, #loginform, #spu {
+        background-color: #f4f4f46b;
+    }
+    .mt {
+        background-color: #f4f4f4c2 !important;
+    }
+    #filel {
+        background-color: #e6e6e6;
+    }
+    .stundeselction:hover {
+        background-color: rgb(255, 255, 255);
+    }
+    .stundeselction {
+        background-color: rgb(211, 211, 211);
+    }
+    .selt {
+        background-color: rgb(194, 194, 194);
+    }
+}
+
+/*########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+########################################################################*/
+
+@media only screen and (pointer: coarse) {
+    body, #safeo, #safeu {
+        background-color: rgb(172, 172, 172);
+        color: rgb(21, 21, 21);
+    }
+    .sprow > td:not(.std):not(.gp) {
+        background-color: rgb(227, 227, 227);
+    }
+    .sprow > th.today {
+        background-color: #e6e6e6;
+    }
+    #stundenplan {
+        background-color: #cdcdcd;
+        color: rgb(43, 43, 43);
+    }
+    input, button, select, #filel {
+        background-color: #d8d8d8;
+        color: rgb(19, 19, 19);
+    }
+    .gp, #econtent, #hcontent, #settingscont, #loginform, #spu {
+        background-color: rgb(237, 237, 237);
+    }
+    #filel, #file {
+        background-color: #ededed;
+    }
+    .sprow > td:not(.std):not(.gp):not(.none) {
+        color: #ddd;
+    }
+}

@@ -1,0 +1,1603 @@
+@keyframes blink {
+    0%{opacity: 100%;}
+    50%{opacity:0%}
+    100%{opacity: 100%;}
+}
+* {
+    display: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: default;
+}
+#AKTDATE, #STANDDATE {
+    display: inline;
+}
+*:-webkit-autofill, *:-webkit-autofill:hover, *:-webkit-autofill:focus, *:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+br {
+    display: block;
+}
+.inputfach, .selfachform {
+    display: block;
+}
+#stundenplan, #stundenplan > tbody {
+    display: table;
+    width: calc(100vw - 80pt);
+    height: 800pt;
+    line-break: strict;
+    word-wrap: break-word;
+    border-collapse: collapse;
+    border: none !important;
+    border-radius: 20pt;
+    z-index: 9;
+}
+.sprow > td, .sprow > th {
+    display: table-cell;
+    height: calc(760pt / 9);
+    width: calc((100vw - 80pt - 7pt) / 6);
+    position: relative;
+    margin: 0;
+    text-align: center;
+}
+.sprow {
+    scroll-snap-align: start;
+    border: none !important;
+    display: table-row;
+    width: calc(100vw - 80pt);
+    position: relative;
+}
+.gp {
+    height: 40pt !important;
+    width: calc(100vw - 80pt);
+}
+#spd {
+    display: block;
+    scroll-snap-align: start;
+    position: absolute;
+    top: 67pt;
+    left: 40pt;
+    padding-top: 138pt;
+    width: calc(100vw - 80pt);
+    padding-bottom: 169pt;
+}
+.barform {
+    display: unset;
+}
+html {
+    display: unset;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif, SF Pro, sf, SF, arial;
+    overflow: hidden;
+}
+body {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+}
+#safeo {
+    display: unset;
+    width: 110vw;
+    height: 88pt;
+    position: fixed;
+    top: calc(-88pt + 0.1px);
+    left: -5vw;
+    -webkit-backdrop-filter: saturate(180%) blur(50pt);
+    backdrop-filter: saturate(180%) blur(50pt);
+}
+#version {
+    display: unset;
+}
+.titlesch {
+    padding-top: 78pt;
+    scroll-snap-align: start;
+    display: unset;
+    position: absolute;
+    top: 0;
+    left: 40pt;
+    width: 100vw;
+    height: 62pt;
+    line-height: 62pt;
+    font-size: 62pt;
+    font-weight: bold;
+    color: transparent;
+    /*Animation*/
+    z-index: 99;
+}
+.navbar {
+    -webkit-backdrop-filter: saturate(180%) blur(50pt);
+    backdrop-filter: saturate(180%) blur(50pt);
+    display: unset;
+    height: 78pt;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    z-index: 99;
+}
+.navbar::backdrop.titlesch.showtitle {
+    opacity: 0;
+    /*Animation*/
+}
+#leave, #bearb, #StpbT, #HomeT, #EinstT {
+    cursor: pointer;
+    z-index: 99;
+    text-decoration: none;
+}
+#rlbar {
+    display: block;
+    height: 4pt;
+    position: fixed;
+    top: 74pt;
+    left: 0;
+    z-index: 999;
+}
+#leave {
+    right: 40pt;
+    display: unset;
+    position: fixed;
+    top: 15pt;
+    height: 48pt;
+    width: 48pt;
+    background: none;
+    -webkit-appearance: none;
+    border: none;
+    background-size: 48pt 48pt;
+}
+#bearb {
+    left: 40pt;
+    display: unset;
+    position: fixed;
+    height: 78pt;
+    line-height: 78pt;
+    font-size: 34pt;
+    background: none;
+    -webkit-appearance: none;
+    border: none;
+    font-weight: normal;
+}
+.navbar:not(.showtitle) {
+    border: none !important;
+}
+.navbar.showtitle > form > #titlenav {
+    left: 0;
+    display: unset;
+    position: fixed;
+    height: 78pt;
+    width: 100vw;
+    text-align: center;
+    line-height: 78pt;
+    font-size: 34pt;
+    font-weight: bold;
+    /*Animation*/
+}
+.tabbar {
+    -webkit-backdrop-filter: saturate(180%) blur(50pt);
+    backdrop-filter: saturate(180%) blur(50pt);
+    display: unset;
+    height: 150pt;
+    width: 100vw;
+    position: fixed;
+    bottom: -1pt;
+    z-index: 99;
+}
+#EinstT {
+    display: unset;
+    position: fixed;
+    bottom: 83pt;
+    height: 56pt;
+    right: 0;
+    width: calc(100vw / 3);
+    background: none;
+    -webkit-appearance: none;
+    border: none;
+    background-size: 56pt 56pt;
+    background-position-x: center;
+    background-repeat: no-repeat;
+}
+#EinstT.curtab {
+    background-repeat: no-repeat;
+    background-size: 56pt 56pt;
+    background-position-x: center;
+}
+label[for=EinstT] {
+    display: unset;
+    right: 0;
+    position: fixed;
+    bottom: 58pt;
+    height: 20pt;
+    text-align: center;
+    line-height: 20pt;
+    font-size: 20pt;
+    width: calc(100vw / 3);
+}
+#HomeT {
+    display: unset;
+    position: fixed;
+    bottom: 83pt;
+    height: 56pt;
+    left: calc(100vw / 3);
+    width: calc(100vw / 3);
+    background: none;
+    -webkit-appearance: none;
+    border: none;
+    background-size: 56pt 56pt;
+    background-position-x: center;
+    background-repeat: no-repeat;
+}
+label[for=HomeT] {
+    display: unset;
+    left: calc(100vw / 3);
+    position: fixed;
+    bottom: 58pt;
+    height: 20pt;
+    text-align: center;
+    line-height: 20pt;
+    font-size: 20pt;
+    width: calc(100vw / 3);
+}
+#StpbT {
+    display: unset;
+    position: fixed;
+    bottom: 83pt;
+    height: 56pt;
+    width: calc(100vw / 3);
+    background: none;
+    -webkit-appearance: none;
+    border: none;
+    background-size: 56pt 56pt;
+    background-position-x: center;
+    background-repeat: no-repeat;
+}
+#StpbT.curtab {
+    background-repeat: no-repeat;
+    background-size: 56pt 56pt;
+    background-position-x: center;
+}
+label[for=StpbT] {
+    display: unset;
+    position: fixed;
+    bottom: 58pt;
+    height: 20pt;
+    text-align: center;
+    line-height: 20pt;
+    font-size: 20pt;
+    width: calc(100vw / 3);
+}
+#akt {
+    display: block;
+    font-size: 12pt;
+    width: calc(100vw - 160pt);
+    margin-left: 40pt;
+    margin-top: 10pt;
+    height: 12pt;
+    line-height: 12pt;
+
+}
+#akt > br {
+    display: none;
+}
+#bearbopt {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: calc(100vw - 80pt);
+    height: 78pt;
+    line-height: 78pt;
+    text-align: center;
+    margin-top: 60pt;
+    margin-bottom: 40pt;
+    border-radius: 20pt;
+}
+.bearboption {
+    display: inline-block;
+    width: calc((100vw - 80pt) / 3);
+    margin-top: 15pt;
+    height: 48pt;
+    background: none;
+    -webkit-appearance: none;
+    border: none;
+    background-size: 48pt 48pt;
+}
+#pentf, #peva, #praumw, #pfreis, #pvertr {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: calc((100vw - 80pt - 5pt) / 5);
+    height: 80pt;
+    line-height: 80pt;
+    text-align: center;
+    margin-top: 60pt;
+    margin-bottom: 40pt;
+    overflow: hidden;
+}
+#pentf {
+    background-color: rgb(255, 69, 58) !important;
+    border-left: none;
+    border-top-left-radius: 20pt;
+    border-bottom-left-radius: 20pt;
+}
+#peva {
+    background-color: rgb(255, 159, 10) !important;
+}
+#praumw {
+    background-color: rgb(255, 214, 10) !important;
+}
+#pfreis {
+    background-color: rgb(48, 209, 88) !important;
+}
+#pvertr {
+    background-color: rgb(10, 132, 255) !important;
+    border-top-right-radius: 20pt;
+    border-bottom-right-radius: 20pt;
+}
+.logind {
+    display: block;
+    position: absolute;
+    top: 67pt;
+    left: 40pt;
+    padding-top: 138pt;
+    width: calc(100vw - 80pt);
+    padding-bottom: 169pt;
+    margin-bottom: calc(100vh - 167pt);
+}
+#choose, #choose > * {
+    display: inline-block;
+}
+#choose {
+    scroll-snap-align: start;
+    width: calc(100vw - 80pt);
+    height: 60pt;
+    border-radius: 20pt;
+}
+#login, #reg {
+    width: calc((100vw - 90pt) / 2 - 2.5pt);
+    height: 50pt;
+    margin-left: 5pt;
+    margin-top: 5pt;
+    -webkit-appearance: none;
+    border: none;
+    border-radius: 15pt;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 26pt;
+    font-weight: 450;
+}
+div.login {
+    scroll-snap-align: center;
+    display: inline-block;
+    margin-top: 40pt;
+    border-radius: 20pt;
+}
+.login > input {
+    height: 80pt;
+    display: inline-block;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    width: calc(100vw - 120pt);
+    padding-left: 40pt;
+    text-align: left;
+    font-size: 28pt;
+    font-weight: normal;
+}
+.sep {
+    display: block;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    width: calc(100vw - 80pt);
+    margin: 0;
+    padding: 0;
+    height: 1pt;
+}
+.sep2 {
+    display: block;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    width: calc(100vw - 120pt);
+    margin: 0;
+    padding: 0;
+    margin-left: 20pt;
+    height: 1pt;
+}
+.win {
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+#utitle {
+    height: 31pt;
+    line-height: 31pt;
+    font-size: 31pt;
+    display: inline-block;
+    font-weight: bold;
+    position: absolute;
+    top: 20pt;
+    width: calc(100vw - 80pt);
+    text-align: center;
+}
+#spu {
+    display: inline-block;
+    position: absolute;
+    bottom: 40pt;
+    left: 40pt;
+    height: 500pt;
+    max-height: calc(100vh - 80pt);
+    width: calc(100vw - 80pt);
+    border-radius: 20pt;
+    z-index: 999;
+}
+#spue > #exit {
+    display: inline-block;
+    width: calc(100vw - 120pt);
+    border-radius: 15pt;
+    position: absolute;
+    bottom: 60pt;
+    left: 60pt;
+    height: 80pt;
+    -webkit-appearance: none;
+    border: none;
+    cursor: pointer;
+    font-size: 25pt;
+    font-weight: normal;
+    z-index: 999;
+}
+#uf {
+    display: inline-block;
+    width: calc(100vw - 120pt);
+    border-radius: 15pt;
+    position: absolute;
+    bottom: 120pt;
+    left: 20pt;
+    height: 80pt;
+    -webkit-appearance: none;
+    border: none;
+    cursor: pointer;
+    font-size: 25pt;
+    text-align: center;
+    font-weight: normal;
+}
+#spu > input:not(#uf, #file), #filel, #Hj {
+    height: 60pt;
+    line-height: 60pt;
+    width: calc(100vw - 160pt);
+    display: inline-block;
+    margin-left: 20pt;
+    -webkit-appearance: none;
+    border: none;
+    padding-left: 40pt;
+    font-size: 19pt;
+}
+#Hj {
+    width: calc(100vw - 120pt);
+}
+#filel {
+    margin-top: 71pt;
+    border-top-left-radius: 15pt;
+    border-top-right-radius: 15pt;
+}
+#stufe {
+    border-bottom-left-radius: 15pt;
+    border-bottom-right-radius: 15pt;
+}
+.win > form {
+    display: inline-block;
+}
+#settitle:not(.mttitle) {
+    padding-top: 78pt;
+    scroll-snap-align: start;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 40pt;
+    width: 100vw;
+    height: 62pt;
+    line-height: 62pt;
+    font-size: 62pt;
+    font-weight: bold;
+    color: transparent;
+    /*Animation*/
+}
+#settingscont {
+    scroll-snap-align: start;
+    display: block;
+    position: absolute;
+    top: 67pt;
+    left: 40pt;
+    padding-top: 138pt;
+    width: calc(100vw - 80pt);
+    padding-bottom: 169pt;
+}
+#cun, #cpw, #thm, #ff, #kl {
+    display: block;
+}
+.setoption {
+    display: block;
+    scroll-snap-align: start;
+    margin-left: 40pt;
+    margin-top: 60pt;
+    margin-bottom: 10pt;
+    height: 22pt;
+    line-height: 22pt;
+    font-size: 22pt;
+    text-transform: uppercase;
+}
+#cun > .setoption {
+    margin-top: 0pt;
+}
+#kl > .setoption {
+    height: 0;
+    margin-bottom: 0;
+}
+#settingscont > form > input, #settingscont > form > select, .ab {
+    scroll-snap-align: start;
+    height: 80pt;
+    display: inline-block;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    width: calc(100vw - 120pt);
+    padding-left: 40pt;
+    text-align: left;
+    font-size: 28pt;
+    font-weight: normal;
+    -webkit-appearance: none;
+}
+#settingscont > form > input[type=submit], .ab {
+    width: calc(100vw - 80pt);
+    border-bottom-left-radius: 20pt;
+    border-bottom-right-radius: 20pt;
+}
+#settingscont > form > select {
+    text-align: right;
+    width: calc((100vw - 80pt) / 3);
+    padding-right: 40pt;
+    border-top-right-radius: 20pt;
+    text-overflow: ellipsis;
+}
+.seltext {
+    display: inline-block;
+    height: 80pt;
+    line-height: 80pt;
+    text-align: left;
+    font-size: 28pt;
+    font-weight: normal;
+    width: calc((100vw - 80pt) / 3 * 2 - 40pt);
+    padding-left: 40pt;
+    border-top-left-radius: 20pt;
+}
+#akbn, #akpw, #kld, .ab {
+    border-top-left-radius: 20pt;
+    border-top-right-radius: 20pt;
+}
+#kld {
+    margin-bottom: 60pt;
+}
+.mttitle {
+    display: inline-block;
+    padding-top: 20pt;
+    padding-bottom: 20pt;
+    width: calc(100vw - 240pt) !important;
+    height: 35pt;
+    font-size: 34pt;
+    line-height: 35pt;
+    text-align: center;
+    font-weight: bold;
+}
+.mt {
+    position: absolute;
+    display: inline-block;
+    width: calc(100vw - 240pt) !important;
+    left: 120pt;
+    top: calc(50vh - 244.5pt);
+    height: 489pt;
+    border-radius: 20pt;
+}
+.mt.bearb {
+    height: 341pt;
+    top: calc(50vh - 170.5pt);
+}
+.mtcont {
+    display: inline-block;
+    padding-bottom: 40pt;
+    width: calc(100vw - 320pt) !important;
+    padding-left: 40pt;
+    padding-right: 40pt;
+    height: 300pt;
+    font-size: 28pt;
+    overflow: auto;
+    text-align: center;
+}
+.mtcont.bearb {
+    height: 152pt;
+    overflow: hidden;
+}
+.bearbinput {
+    display: inline-block;
+    width: calc(100vw - 370pt);
+    padding-left: 10pt;
+    height: 28pt;
+    line-height: 28pt;
+    font-size: 19pt;
+    margin: 0;
+    margin-bottom: 2pt;
+    border: rgb(142,142,147) solid 1pt;
+}
+.bearbinput::placeholder {
+    opacity: 30%;
+}
+#ml, #mlk {
+    display: inline-block;
+    height: 68pt;
+    line-height: 68pt;
+    font-size: 28pt;
+    width: calc((100vw - 240pt) / 2);
+    -webkit-appearance: none;
+    border: none;
+    background: none;
+    text-align: center;
+    font-weight: normal;
+    cursor: pointer;
+}
+#exitmt, #mlk.bearb {
+    position: absolute;
+    left: calc((100vw - 240pt) / 2);
+    top: 415pt;
+    height: 74pt;
+    width: calc((100vw - 240pt) / 2);
+    -webkit-appearance: none;
+    border: none;
+    background: none;
+    display: inline-block;
+    line-height: 74pt;
+    font-size: 28pt;
+    text-align: center;
+    font-weight: normal;
+    cursor: pointer;
+}
+#mlk.bearb {
+    top: 268pt;
+    left: 0;
+}
+.bearb > #exitmt {
+    top: 267pt;
+}
+#setstufe {
+    margin-top: calc(68pt)
+}
+#dayselection, #dayselection > *, #dayselection > * > *, #dayselection > * > * > *, #dayselection > * > * > * > *, #dayselection > * > * > * > * > * {
+    display: none;
+}
+.output {
+    position: fixed;
+    top: 10pt;
+    left: 10pt;
+    width: calc(100vw - 120pt);
+    padding-left: 100pt;
+    padding-top: 38pt;
+    padding-bottom: 38pt;
+    height: auto;
+    display: block;
+    z-index: 999;
+    border-radius: 40pt;
+    font-size: 19pt;
+    line-height: 19pt;
+    font-weight: 300;
+}
+.output::before {
+    content: "Hinweis";
+    display: block;
+    font-weight: bold;
+}
+.errorout::before {
+    content: "Fehler";
+    display: block;
+    font-weight: bold;
+}
+.errimg {
+    display: block;
+    height: 100%;
+    width: 80pt;
+    position: absolute;
+    left: 10pt;
+    top: 0;
+}
+
+.selected::after {
+    position: absolute;
+    content: "";
+    height: 15pt;
+    width: 15pt;
+    top: 5pt;
+    right: 5pt;
+    border: 1.5pt solid #fff;
+    border-radius: 100%;
+    /*SVG mit Haken*/
+}
+
+#links {
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    text-align: center;
+    left: 0;
+    height: 29pt;
+}
+#links > * {
+    display: inline-block; 
+    margin: 10pt;
+    margin-bottom: 5pt;
+    font-size: 19pt;
+    line-height: 19pt;
+    height: 19pt;
+    text-decoration: none;
+    font-weight: 300;
+}
+#loadani {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99999;
+}
+#loadanimation {
+    display: inline-block;
+    height: 300px;
+    width: 300px;
+    z-index: 99999;
+}
+#ab_box {
+    display: block;
+    width: 95pt;
+    height: 60pt;
+    border-radius: 40pt;
+    float: right;
+    margin: 0;
+    margin-right: 40pt;
+    margin-top: 10pt;
+}
+#ab_text {
+    display: block;
+    width: calc(100vw - 275pt);
+    margin: 0;
+    margin-left: 40pt;
+    float: left;
+    text-align: left;
+    font-size: 28pt;
+    font-weight: normal;
+    line-height: 80pt;
+}
+#ab_check {
+    padding: 0;
+    display: block;
+    background-color: rgb(242,242,247);
+    height: 56pt;
+    width: 56pt;
+    margin: 2pt;
+    border-radius: 100%;
+    float: left;
+    padding-right: 35pt;
+}
+#ab_check:checked {
+    float: right;
+}
+
+
+
+#userview {
+    display: inline-block;
+    width: 100vw;
+    height: 370pt;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+#mestitle {
+    padding-top: 40pt;
+    scroll-snap-align: start;
+    display: unset;
+    position: absolute;
+    top: 0;
+    left: 40pt;
+    width: 100vw;
+    height: 30pt;
+    line-height: 30pt;
+    font-size: 30pt;
+    font-weight: bold;
+    color: transparent;
+    /*Animation*/
+    z-index: 99;
+}
+#chats, #chats > tbody {
+    display: block;
+    position: fixed;
+    height: 100pt;
+    width: calc(100vw - 80pt);
+    margin: 40pt;
+    left: 0;
+    top: 70pt;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    border-collapse: collapse;
+}
+#chats > tbody > tr {
+    display: table-row;
+    height: 100pt;
+    width: calc(100vw - 80pt);
+    white-space: nowrap;
+}
+.chaticon {
+    display: inline-block;
+    height: 100pt;
+    width: 100pt;
+    white-space: nowrap;
+}
+.chaticon > img {
+    display: block;
+    height: 80pt;
+    width: 80pt;
+    border-radius: 100%;
+    padding-left: 10pt;
+    padding-right: 10pt;
+}
+.chaticon > p {
+    display: block;
+    text-align: center;
+    font-size: 10pt;
+    line-height: 20pt;
+    height: 20pt;
+    width: 80pt;
+    padding-left: 10pt;
+    padding-right: 10pt;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+#chatname {
+    display: block;
+    position: fixed;
+    height: 80pt;
+    width: calc(100vw - 80pt);
+    margin: 40pt;
+    left: 0;
+    top: 210pt;
+}
+#chatname > img {
+    height: 80pt;
+    width: 80pt;
+    border-radius: 100%;
+}
+#personTo {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#personUser {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.to, .user {
+    display: inline-block;
+}
+#chatname > p {
+    font-size: 30pt;
+    line-height: 80pt;
+    width: calc(50vw - 150pt);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+#personToName {
+    position: absolute;
+    top: 0;
+    left: 100pt;
+}
+#personUserName {
+    position: absolute;
+    top: 0;
+    right: 100pt;
+    text-align: right;
+}
+#chatview {
+    display: block;
+    position: fixed;
+    top: 370pt;
+    height: 100vh;
+    width: 100vw;
+}
+#textbox {
+    display: block;
+    position: fixed;
+    height: 175pt;
+    bottom: 0;
+    width: 100vw;
+}
+#textbox > input[type=text] {
+    display: block;
+    height: 60pt;
+    margin: 20pt;
+    width: calc(100vw - 180pt);
+    border-radius: 60pt;
+    padding-left: 30pt;
+    padding-right: 30pt;
+    font-size: 40pt;
+    background: transparent;
+    border: none;
+    font-weight: 300;
+}
+#textbox > img {
+    display: block;
+    height: 60pt;
+    width: 60pt;
+    border-radius: 100%;
+    position: absolute;
+    top: 20pt;
+    right: 20pt;
+}
+#chat {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: calc(100vw - 80pt);
+    bottom: 176pt;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 40pt;
+    padding-top: 410pt;
+}
+.mesINFO {
+    display: inline-block;
+    margin-bottom: 20pt;
+    min-height: 30pt;
+    height: 30pt;
+    width: 500pt;
+    margin-left: calc(50vw - 250pt - 40pt);
+    border-radius: 10pt;
+    margin-right: 100vw;
+}
+.mesCONT {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: calc(50vw - 130pt);
+    line-height: 25pt;
+    font-size: 20pt;
+    margin-bottom: 5pt;
+    word-break: normal;
+    word-wrap: break-word;
+}
+.mesINFO > .mesCONT {
+    display: inline-block;
+    font-size: 15pt;
+    line-height: 30pt;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    max-width: 100%;
+}
+.mesFROM, .mesTO {
+    padding-top: 10pt;
+    display: block;
+    width: auto;
+    max-width: calc(50vw - 130pt);
+    min-width: 100pt;
+    height: auto;
+    min-height: 40pt;
+    border-radius: 40pt;
+    padding-left: 25pt;
+    padding-right: 25pt;
+    margin-bottom: 20pt;
+}
+.mesFROM {
+    float: left;
+    margin-right: 100vw;
+    text-align: left;
+}
+.mesTO {
+    float: right;
+    margin-left: 100vw;
+    text-align: right;
+}
+.mesTIME {
+    display: block;
+    font-size: 10pt;
+    margin-bottom: 10pt;
+}
+.mesFROM > .mesTIME {
+    float: left;
+}
+.mesTO > .mesTIME {
+    float: right;
+}
+#chatspace {
+    display: block;
+    width: 100vw;
+    height: 40pt;
+    color: transparent;
+    background: transparent;
+}
+
+
+/*##########################################
+############################################
+##########################################*/
+
+@media only screen and (min-device-width: 428.1pt), (orientation: landscape) {
+    #stundenplan, #stundenplan > tbody {
+        width: calc(100vw - 40pt);
+        height: 400pt;
+        border-radius: 10pt;
+    }
+    .sprow > td, .sprow > th {
+        height: calc(380pt / 9);
+        width: calc((100vw - 40pt - 3.5pt) / 6);
+    }
+    .sprow {
+        width: calc(100vw - 40pt);
+    }
+    .gp {
+        height: 20pt !important;
+        width: calc(100vw - 40pt);
+    }
+    #spd {
+        top: 33.5pt;
+        left: 20pt;
+        padding-top: 69pt;
+        width: calc(100vw - 40pt);
+        padding-bottom: 84.5pt;
+    }
+    #safeo {
+        width: 110vw;
+        height: 44pt;
+        top: calc(-44pt + 0.1px);
+        -webkit-backdrop-filter: saturate(180%) blur(25pt);
+        backdrop-filter: saturate(180%) blur(25pt);
+        z-index: 99;
+    }
+    #version {
+        display: unset;
+    }
+    .titlesch {
+        padding-top: 39pt;
+        left: 20pt;
+        height: 31pt;
+        line-height: 31pt;
+        font-size: 31pt;
+    }
+    .navbar {
+        -webkit-backdrop-filter: saturate(180%) blur(25pt);
+        backdrop-filter: saturate(180%) blur(25pt);
+        height: 39pt;
+    }
+    #leave {
+        right: 20pt;
+        top: 7.5pt;
+        height: 24pt;
+        width: 24pt;
+        background-size: 24pt 24pt;
+    }
+    #bearb {
+        left: 20pt;
+        height: 39pt;
+        line-height: 39pt;
+        font-size: 17pt;
+    }
+    .navbar.showtitle > form > #titlenav {
+        height: 39pt;
+        line-height: 39pt;
+        font-size: 17pt;
+    }
+    .tabbar {
+        -webkit-backdrop-filter: saturate(180%) blur(25pt);
+        backdrop-filter: saturate(180%) blur(25pt);
+        height: 75pt;
+        bottom: -1pt;
+    }
+    #EinstT {
+        bottom: 41.5pt;
+        height: 28pt;
+        background-size: 28pt 28pt;
+    }
+    #EinstT.curtab {
+        background-size: 28pt 28pt;
+    }
+    label[for=EinstT] {
+        bottom: 29pt;
+        height: 10pt;
+        line-height: 10pt;
+        font-size: 10pt;
+    }
+    #HomeT {
+        bottom: 41.5pt;
+        height: 28pt;
+        background-size: 28pt 28pt;
+    }
+    #HomeT.curtab {
+        background-size: 28pt 28pt;
+    }
+    label[for=HomeT] {
+        bottom: 29pt;
+        height: 10pt;
+        line-height: 10pt;
+        font-size: 10pt;
+    }
+    #StpbT {
+        bottom: 41.5pt;
+        height: 28pt;
+        background-size: 28pt 28pt;
+    }
+    #StpbT.curtab {
+        background-size: 28pt 28pt;
+    }
+    label[for=StpbT] {
+        bottom: 29pt;
+        height: 10pt;
+        line-height: 10pt;
+        font-size: 10pt;
+    }
+    #akt {
+        font-size: 6pt;
+        width: calc(100vw - 80pt);
+        margin-left: 20pt;
+        margin-top: 5pt;
+        height: 6pt;
+        line-height: 6pt;
+    
+    }
+    #bearbopt {
+        width: calc(100vw - 40pt);
+        height: 39pt;
+        line-height: 39pt;
+        margin-top: 30pt;
+        margin-bottom: 20pt;
+        border-radius: 10pt;
+    }
+    .bearboption {
+        width: calc((100vw - 40pt) / 3);
+        margin-top: 7.5pt;
+        height: 24pt;
+        background: none;
+        -webkit-appearance: none;
+        border: none;
+        background-size: 24pt 24pt;
+    }
+    .bearboption:not(.gray) {
+        cursor: pointer;
+    }
+    #pentf, #peva, #praumw, #pfreis, #pvertr {
+        width: calc((100vw - 40pt - 5pt) / 5);
+        height: 40pt;
+        line-height: 40pt;
+        margin-top: 30pt;
+        margin-bottom: 20pt;
+    }
+    #pentf {
+        border-top-left-radius: 10pt;
+        border-bottom-left-radius: 10pt;
+    }
+    #pvertr {
+        border-top-right-radius: 10pt;
+        border-bottom-right-radius: 10pt;
+    }
+    .logind {
+        top: 33.5pt;
+        left: 20pt;
+        padding-top: 69pt;
+        width: calc(100vw - 40pt);
+        padding-bottom: 84.5pt;
+        margin-bottom: calc(100vh - 83.5pt);
+    }
+    #choose {
+        width: calc(100vw - 40pt);
+        height: 30pt;
+        border-radius: 10pt;
+    }
+    #login, #reg {
+        width: calc((100vw - 45pt) / 2 - 1.25pt);
+        height: 25pt;
+        margin-left: 2.5pt;
+        margin-top: 2.5pt;
+        border-radius: 7.4pt;
+        font-size: 13pt;
+    }
+    div.login {
+        margin-top: 20pt;
+        border-radius: 10pt;
+    }
+    .login > input {
+        height: 40pt;
+        width: calc(100vw - 60pt);
+        padding-left: 20pt;
+        font-size: 14pt;
+    }
+    .sep {
+        width: calc(100vw - 40pt);
+        height: 1pt;
+    }
+    .sep2 {
+        width: calc(100vw - 60pt);
+        margin-left: 10pt;
+        height: 1pt;
+    }
+    #utitle {
+        height: 15.5pt;
+        line-height: 15.5pt;
+        font-size: 15.5pt;
+        top: 10pt;
+        width: calc(100vw - 40pt);
+    }
+    #spu {
+        bottom: 20pt;
+        left: 20pt;
+        height: 250pt;
+        max-height: calc(100vh - 40pt);
+        width: calc(100vw - 40pt);
+        border-radius: 10pt;
+    }
+    #spue > #exit {
+        width: calc(100vw - 60pt);
+        border-radius: 7.5pt;
+        bottom: 30pt;
+        left: 30pt;
+        height: 40pt;
+        font-size: 12.5pt;
+    }
+    #uf {
+        width: calc(100vw - 60pt);
+        border-radius: 7.5pt;
+        bottom: 60pt;
+        left: 10pt;
+        height: 40pt;
+        font-size: 12.5pt;
+    }
+    #spu > input:not(#uf, #file), #filel, #Hj {
+        height: 30pt;
+        line-height: 30pt;
+        width: calc(100vw - 80pt);
+        margin-left: 10pt;
+        padding-left: 20pt;
+        font-size: 9.5pt;
+    }
+    #Hj {
+        width: calc(100vw - 60pt);
+    }
+    #filel {
+        margin-top: 35.5pt;
+        border-top-left-radius: 7.5pt;
+        border-top-right-radius: 7.5pt;
+    }
+    #stufe {
+        border-bottom-left-radius: 7.5pt;
+        border-bottom-right-radius: 7.5pt;
+    }
+    #settitle:not(.mttitle) {
+        padding-top: 39pt;
+        left: 20pt;
+        height: 31pt;
+        line-height: 31pt;
+        font-size: 31pt;
+    }
+    #settingscont {
+        top: 33.5pt;
+        left: 20pt;
+        padding-top: 69pt;
+        width: calc(100vw - 40pt);
+        padding-bottom: 84.5pt;
+    }
+    .setoption {
+        margin-left: 20pt;
+        margin-top: 30pt;
+        margin-bottom: 5pt;
+        height: 11pt;
+        line-height: 11pt;
+        font-size: 11pt;
+    }
+    #settingscont > form > input, #settingscont > form > select, .ab {
+        height: 40pt;
+        width: calc(100vw - 60pt);
+        padding-left: 20pt;
+        font-size: 14pt;
+    }
+    #settingscont > form > input, #settingscont > form > select > *, .ab {
+        display: block;
+    }
+    #settingscont > form > input[type=submit], .ab {
+        width: calc(100vw - 40pt);
+        border-bottom-left-radius: 10pt;
+        border-bottom-right-radius: 10pt;
+    }
+    #settingscont > form > select {
+        width: calc((100vw - 40pt) / 5 * 1);
+        padding-right: 20pt;
+        border-top-right-radius: 10pt;
+    }
+    .seltext {
+        height: 40pt;
+        line-height: 40pt;
+        font-size: 14pt;
+        width: calc((100vw - 40pt) / 5 * 4 - 20pt);
+        padding-left: 20pt;
+        border-top-left-radius: 10pt;
+    }
+    #akbn, #akpw, #kld, .ab {
+        border-top-left-radius: 10pt;
+        border-top-right-radius: 10pt;
+    }
+    #kld {
+        margin-bottom: 30pt;
+    }
+    .mttitle {
+        padding-top: 10pt;
+        padding-bottom: 10pt;
+        width: calc(100vw - 120pt) !important;
+        height: 17.5pt;
+        font-size: 17pt;
+        line-height: 17.5pt;
+    }
+    .mt {
+        top: calc(50vh - 102.5pt);
+        width: calc(100vw - 120pt) !important;
+        left: 60pt;
+        height: 205pt;
+        border-radius: 10pt;
+        padding-bottom: 40pt;
+    }
+    .mt.bearb {
+        height: 130.5pt !important;
+        top: calc(50vh - 85.25pt) !important;
+    }
+    .mtcont {
+        padding-bottom: 20pt;
+        width: calc(100vw - 160pt) !important;
+        padding-left: 20pt;
+        padding-right: 20pt;
+        height: 150pt;
+        font-size: 14pt;
+    }
+    .mtcont.bearb {
+        height: 76pt !important;
+    }
+    .bearbinput {
+        width: calc(100vw - 185pt);
+        padding-left: 5pt;
+        height: 14pt;
+        line-height: 14pt;
+        font-size: 9.5pt;
+        margin: 0;
+        margin-bottom: 1pt;
+        border: rgb(142,142,147) solid 1pt;
+    }
+    #ml, #mlk {
+        height: 30pt;
+        line-height: 30pt !important;
+        font-size: 14pt !important;
+        width: calc((100vw - 120pt) / 2);
+    }
+    #exitmt, #mlk.bearb {
+        height: 37pt;
+        width: calc((100vw - 120pt) / 2);
+        left: calc((100vw - 120pt) / 2);
+        top: 207.5pt;
+        line-height: 37pt;
+        font-size: 14pt;
+    }
+    #mlk.bearb {
+        top: 133.5pt;
+        left: 0;
+    }
+    .bearb > #exitmt {
+        top: 133.5pt;
+    }
+    #setstufe {
+        margin-top: calc(34pt)
+    }
+    .output {
+        top: 5pt;
+        left: 5pt;
+        width: calc(100vw - 60pt);
+        padding-left: 50pt;
+        padding-top: 19pt;
+        padding-bottom: 19pt;
+        border-radius: 20pt;
+        font-size: 9.5pt;
+        line-height: 9.5pt;
+    }
+    .errimg {
+        width: 40pt;
+        left: 5pt;
+    }
+
+    .selected::after {
+        position: absolute;
+        content: "";
+        height: 7.5pt;
+        width: 7.5pt;
+        top: 2.5pt;
+        right: 2.5pt;
+        border: 1pt solid #fff;
+        border-radius: 100%;
+    }
+    
+    #ab_box {
+        width: 47.5pt;
+        height: 30pt;
+        border-radius: 20pt;
+        margin-right: 20pt;
+        margin-top: 5pt;
+    }
+    #ab_text {
+        width: calc(100vw - 137.5pt);
+        margin-left: 20pt;
+        font-size: 14pt;
+        line-height: 40pt;
+    }
+    #ab_check {
+        height: 28pt;
+        width: 28pt;
+        margin: 1pt;
+        padding-right: 17.5pt;
+    }
+    #ab_check:checked {
+        float: right;
+    }
+
+
+
+    #userview {
+        width: 250pt;
+        height: 100vh;
+    }
+    #mestitle {
+        height: 20pt;
+        padding: 20pt;
+        left: 0;
+        font-size: 20pt;
+        line-height: 20pt;
+    }
+    #chats, #chats > tbody {
+        white-space: normal;
+        height: calc(100vh - 70pt);
+        margin: 20pt;
+        width: 230pt;
+        top: 50pt;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border-collapse: collapse;
+    }
+    #chats > tbody > tr {
+        height: calc(100vh - 70pt);
+        width: 230pt;
+        white-space: normal;
+    }
+    .chaticon {
+        height: 50pt;
+        width: 210pt;
+        white-space: nowrap;
+    }
+    .chaticon > img {
+        height: 40pt;
+        width: 40pt;
+        margin-left: 5pt;
+        margin-top: 5pt;
+        padding: 0;
+        float: left;
+    }
+    .chaticon > p {
+        float: right;
+        text-align: left;
+        font-size: 15pt;
+        line-height: 50pt;
+        height: 50pt;
+        width: 140pt;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    #rlbar {
+        top: 37pt;
+        height: 2pt;
+    }
+}
+.sprow > td.Entfall::after {
+    content: "E";
+    position: absolute;
+    height: 15pt;
+    width: 15pt;
+    top: 5pt;
+    right: 5pt;
+    background-color: rgb(255, 69, 58);
+    box-shadow: inset 0 0 8pt -2pt rgba(0, 0, 0,0.5);
+    border-radius: 100%;
+    text-align: center;
+    font-weight: normal;
+    font-size: 10pt;
+    line-height: 15pt;
+}
+.sprow > td.EVA::after {
+    content: "E";
+    position: absolute;
+    height: 15pt;
+    width: 15pt;
+    top: 5pt;
+    right: 5pt;
+    background-color: rgb(255, 159, 10);
+    box-shadow: inset 0 0 8pt -2pt rgba(0, 0, 0,0.5);
+    border-radius: 100%;
+    text-align: center;
+    font-weight: normal;
+    font-size: 10pt;
+    line-height: 15pt;
+}
+.sprow > td.Raumwechsel::after {
+    content: "R";
+    position: absolute;
+    height: 15pt;
+    width: 15pt;
+    top: 5pt;
+    right: 5pt;
+    background-color: rgb(255, 214, 10);
+    box-shadow: inset 0 0 8pt -2pt rgba(0, 0, 0,0.5);
+    border-radius: 100%;
+    text-align: center;
+    font-weight: normal;
+    font-size: 10pt;
+    line-height: 15pt;
+}
+.sprow > td.Freisetzung::after {
+    content: "F";
+    position: absolute;
+    height: 15pt;
+    width: 15pt;
+    top: 5pt;
+    right: 5pt;
+    background-color: rgb(48, 209, 88);
+    box-shadow: inset 0 0 8pt -2pt rgba(0, 0, 0,0.5);
+    border-radius: 100%;
+    text-align: center;
+    font-weight: normal;
+    font-size: 10pt;
+    line-height: 15pt;
+}
+.sprow > td.Vertretung::after {
+    content: "V";
+    position: absolute;
+    height: 15pt;
+    width: 15pt;
+    top: 5pt;
+    right: 5pt;
+    background-color: rgb(10, 132, 255);
+    box-shadow: inset 0 0 8pt -2pt rgba(0, 0, 0,0.5);
+    border-radius: 100%;
+    text-align: center;
+    font-weight: normal;
+    font-size: 10pt;
+    line-height: 15pt;
+}
+
+.ab {
+    padding: 0;
+}

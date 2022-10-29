@@ -1,0 +1,68 @@
+.M {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.D, .RHE {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.PH {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.KR, .ER, .PP, .PPL, .PL, .SL {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.CH {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.IF8, .IF0, .IF, .MK, .WP {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.SW, .PK, .P {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.SP {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.KU {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.E5, .E {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.GE {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.BI, .NW {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.EK {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.S8, .S0, .S {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.MU {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.F7, .F0, .F6, .L7, .L6, .L, .F, .G, .G0, .G1 {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+.Cambridge {
+    background-color: rgba(41, 41, 41, 0.578);
+}
+
+.Regen {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 69, 58, 0.3) 0%,
+        rgba(255, 159, 10, 0.3) 10%,
+        rgba(255, 214, 10, 0.3) 20%,
+        rgba(48, 209, 88, 0.3) 30%,
+        rgba(102, 212, 207, 0.3) 40%,
+        rgba(64, 200, 224, 0.3) 50%,
+        rgba(10, 132, 255, 0.3) 60%,
+        rgba(94, 92, 230, 0.3) 70%,
+        rgba(191, 90, 242, 0.3) 80%,
+        rgba(255, 55, 95, 0.3) 90%,
+        rgba(255, 69, 58, 0.3) 100%
+    );
+} 

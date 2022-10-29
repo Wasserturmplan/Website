@@ -1,0 +1,484 @@
+<html style="background-color: black;"><head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styleschlicht.css">
+    <link rel="icon" href="images/icon.png"> 
+    <title>Wasserturmplan</title>
+
+    <meta name="description" content="Übersicht der Vertretungsstunden auf dem eigenen Stundenplan">
+    <meta property="og:title" content="Wasserturmplan">
+    <meta property="og:url" content="https://wasserturmplan.steffenmolitor.de">
+    <meta property="og:image" content="/images/wasserturmplan_600x600_dark.png">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="images/wasserturmplan_iOS.png">
+    <meta name="apple-mobile-web-app-title" content="Wasserturmplan">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+    <!-- Skripte für automatische Farbschema-Erkennung aus dem Internet!-->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script>
+    <script>
+        var $color_scheme = Cookies.get("color_scheme");
+        function get_color_scheme() {
+        return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+        }
+        function update_color_scheme() {
+        Cookies.set("color_scheme", get_color_scheme());
+        }
+        if ((typeof $color_scheme === "undefined") || (get_color_scheme() != $color_scheme))
+        update_color_scheme();
+        if (window.matchMedia)
+        window.matchMedia("(prefers-color-scheme: dark)").addListener( update_color_scheme );
+    </script>
+    <script>
+        //Stundenplanupload HTML zu Text (für Weiterverarbeitung auf dem Server) Funktion
+        function getStunden() {
+            var tbodys = document.querySelectorAll("td > table > tbody");
+            var cont = [];
+            var rheco = 0;
+            var lico = 0;
+            for(i = 1; i < tbodys.length; i++){
+                if(tbodys[i].innerText != null && tbodys[i].innerText.includes("*") && !tbodys[i].innerText.includes("RHE") && !tbodys[i].innerText.includes("LI")) {
+                    stelle = cont.length;
+                    for(j = 0; j < tbodys[i].childNodes.length; j++){
+                        if(j == 0 && tbodys[i].childNodes[j].innerText != undefined){
+                            cont[stelle] = tbodys[i].childNodes[j].innerText.replace(/\s/g, '').replace("*", '');
+                        } else if(tbodys[i].childNodes[j].innerText != undefined) {
+                            cont[stelle] += "%" + tbodys[i].childNodes[j].innerText.replace(/\s/g, '');
+                        }
+                    }
+                    cont[stelle] += "%" + tbodys[i].parentElement.parentElement.rowSpan;
+                    cont[stelle] += "%" + tbodys[i].parentElement.parentElement.colSpan;
+                } else if(tbodys[i].innerText.includes("RHE")) {
+                    if(rheco % 2 == 0) {
+                        cont[cont.length] = "RHEG1%GEL%?%Hj1%4%6";
+                        cont[cont.length] = "RHEG1%GEL%?%Hj2%5%6";
+                    }
+                    rheco++;
+                } else if(tbodys[i].innerText.includes("LI")) {
+                    if(lico % 2 == 0) {
+                        cont[cont.length] = "LIG1%?%?%Hj1%4%6";
+                        cont[cont.length] = "LIG1%?%?%Hj2%5%6";
+                    }
+                    rheco++;
+                } else if(tbodys[i].childNodes[0] != null && tbodys[i].childNodes[0].childNodes[0].innerHTML == "") {
+                    cont[cont.length] = "-";
+                }
+            }
+            var templateText = "&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&_&";
+            var templateTAr = templateText.split("_");
+            var stelle = 0;
+            var outputText;
+            for(i = 0; i < cont.length; i++) {
+                if(i != 0) {
+                    stundeXm1 = cont[i-1].split("%");
+                }
+                stundeX = cont[i].split("%");
+                if(i < cont.length - 1) {
+                    stundeXp1 = cont[i+1].split("%");
+                }
+                while(templateTAr[stelle] != "&") {
+                    stelle++;
+                }
+                if(stundeX.length == 5) {
+                    if(stundeX[0].length >= 3 && (stundeX[0].slice(-2,-1).includes("L") || stundeX[0].slice(-2,-1).includes("G")) && !isNaN(stundeX[0].slice(-1))) {
+                        templateTAr[stelle] = stundeX[0].substr(0,stundeX[0].length - 2).replace("IF8","IF").replace("IF0","IF").replace("E5","E").replace("S8","S").replace("S0","S");
+                        templateTAr[stelle] += "<BR>" + stundeX[0].substr(stundeX[0].length - 2,2);
+                        templateTAr[stelle] += "<BR>" + stundeX[1] + "<BR>" + stundeX[2];
+                    } else {
+                        templateTAr[stelle] = stundeX[0].replace("IF8","IF").replace("IF0","IF").replace("E5","E").replace("S8","S").replace("S0","S") + "<BR>?";
+                        templateTAr[stelle] += "<BR>" + stundeX[1] + "<BR>" + stundeX[2];
+                    }
+                    if(stundeX[3] == "3" || stundeX[3] == "4") {
+                        templateTAr[stelle + 5] = templateTAr[stelle];
+                    } else if(stundeX[3] == "5" || stundeX[4] == "6") {
+                        templateTAr[stelle + 5] = templateTAr[stelle];
+                        templateTAr[stelle + 10] = templateTAr[stelle];
+                    }
+                } else if(stundeX.length == 6) {
+                    if(stundeX[3] == document.getElementById("pHj").innerText.replace(/\s/g, '') && stundeX[5] == "12") {
+                        if(stundeX[0].length >= 3 && (stundeX[0].slice(-2,-1).includes("L") || stundeX[0].slice(-2,-1).includes("G")) && !isNaN(stundeX[0].slice(-1))) {
+                            templateTAr[stelle] = stundeX[0].substr(0,stundeX[0].length - 2).replace("IF8","IF").replace("IF0","IF").replace("E5","E").replace("S8","S").replace("S0","S");
+                            templateTAr[stelle] += "<BR>" + stundeX[0].substr(stundeX[0].length - 2,2);
+                            templateTAr[stelle] += "<BR>" + stundeX[1] + "<BR>" + stundeX[2];
+                        } else {
+                            templateTAr[stelle] = stundeX[0].replace("IF8","IF").replace("IF0","IF").replace("E5","E").replace("S8","S").replace("S0","S") + "<BR>?";
+                            templateTAr[stelle] += "<BR>" + stundeX[1] + "<BR>" + stundeX[2];
+                        }
+                        if(stundeX[4] == "3" || stundeX[4] == "4") {
+                            templateTAr[stelle + 5] = templateTAr[stelle];
+                        } else if(stundeX[4] == "5" || stundeX[4] == "6") {
+                            templateTAr[stelle + 5] = templateTAr[stelle];
+                            templateTAr[stelle + 10] = templateTAr[stelle];
+                        }
+                    } else if(stundeX[3] != document.getElementById("pHj").innerText.replace(/\s/g, '') && stundeX[5] == "12") {
+                        templateTAr[stelle] = "-";
+                    } else if(stundeX[3] == document.getElementById("pHj").innerText.replace(/\s/g, '') && stundeX[5] == "6") {
+                        if(stundeX[0].length >= 3 && (stundeX[0].slice(-2,-1).includes("L") || stundeX[0].slice(-2,-1).includes("G")) && !isNaN(stundeX[0].slice(-1))) {
+                            templateTAr[stelle] = stundeX[0].substr(0,stundeX[0].length - 2).replace("IF8","IF").replace("IF0","IF").replace("E5","E").replace("S8","S").replace("S0","S");
+                            templateTAr[stelle] += "<BR>" + stundeX[0].substr(stundeX[0].length - 2,2);
+                            templateTAr[stelle] += "<BR>" + stundeX[1] + "<BR>" + stundeX[2];
+                        } else {
+                            templateTAr[stelle] = stundeX[0].replace("IF8","IF").replace("IF0","IF").replace("E5","E").replace("S8","S").replace("S0","S") + "<BR>?";
+                            templateTAr[stelle] += "<BR>" + stundeX[1] + "<BR>" + stundeX[2];
+                        } 
+                        if(stundeX[4] == "3" || stundeX[4] == "4") {
+                            templateTAr[stelle + 5] = templateTAr[stelle];
+                        } else if(stundeX[4] == "5" || stundeX[4] == "6") {
+                            templateTAr[stelle + 5] = templateTAr[stelle];
+                            templateTAr[stelle + 10] = templateTAr[stelle];
+                        }
+                    } else if(stundeX[3] != document.getElementById("pHj").innerText.replace(/\s/g, '')) {
+                        /*if(pHj = "Hj1" && stundeX[5] == "6" && stundeXm1[0] != "-") {
+                            stelle--;
+                        }
+                        if(pHj = "Hj2" && stundeX[5] == "6" && stundeXp1[0] != "-") {*/
+                            stelle--;
+                        //}
+                    }
+                } else if(stundeX[0] == "-") {
+                    templateTAr[stelle] = "-";
+                }
+                stelle++;
+            }
+            templateTAr[templateTAr.length - 1] = document.getElementById("pStufe").innerText;
+            outputText = templateTAr.join("_");
+            document.getElementById("spwin").outerHTML = "";
+            document.getElementById("sptext").value = outputText;
+            document.getElementById("spsub").submit();
+        }
+    </script>
+    <script>console.log("b_2.2")</script>    </head>
+<body id="body" onload="fachklassen(); stopload();">    
+<form method="post" id="spsub" style="display:none">
+    <input type="text" name="sptext" id="sptext">
+</form>
+<!-- Vom Server verarbeiteter und ausgegebener Bereich !-->
+
+                <button id="edittable" onclick="sp()">Bearbeiten</button>
+                <button id="profile" onclick="profile()">demo</button>
+                <p class="titlesch">Stundenplan</p>
+                <div id="spd">
+                <table id="stundenplan">
+                    <tbody><tr class="sprow">
+                        <th>Stunde</th><th>Montag</th><th>Dienstag</th><th>Mittwoch</th><th>Donnerstag</th><th>Freitag</th>
+                    </tr>
+                    <tr class="sprow">
+                        <td class="std">1.<br>(7:45 - 8:45)</td><td id="mo1" class="CH CH-?">CH<br>?<br>HRS<br>A112</td><td id="di1" class="IF IF-L1">IF<br>L1<br>KEH<br>A201</td><td id="mi1" class="KR KR-G2">KR<br>G2<br>CAL<br>C7</td><td id="do1" class="SW SW-?">SW<br>?<br>MAR<br>C7</td><td id="fr1" class="SP SP-G2">SP<br>G2<br>KRE<br>TH</td>
+                    </tr>
+                    <tr class="sprow">
+                        <td class="std">2.<br>(8:50 - 9:50)</td><td id="mo2" class="D D-G1">D<br>G1<br>TRU<br>C206</td><td id="di2" class="IF IF-L1">IF<br>L1<br>KEH<br>A201</td><td id="mi2" class="M M-L1">M<br>L1<br>HER<br>C7</td><td id="do2" class="M M-L1">M<br>L1<br>HER<br>C7</td><td id="fr2" class="KU KU-G2">KU<br>G2<br>SNE<br>A107</td>
+                    </tr>
+                    <tr class="sprow">
+                        <td colspan="6" class="gp">1. große Pause</td>
+                    </tr>
+                    <tr class="sprow">
+                        <td class="std">3.<br>(10:15 - 11:15)</td><td id="mo3" class="E E-G3">E<br>G3<br>MOU<br>C2</td><td id="di3" class="KU KU-G2">KU<br>G2<br>SNE<br>A107</td><td id="mi3" class="M M-L1">M<br>L1<br>HER<br>C7</td><td id="do3" class="SP SP-G2">SP<br>G2<br>KRE<br>SH</td><td id="fr3" class="PH PH-G1">PH<br>G1<br>MOU<br>A108</td>
+                    </tr>
+                    <tr class="sprow">
+                        <td class="std">4.<br>(11:20 - 12:20)</td><td id="mo4" class="SW SW-?">SW<br>?<br>MAR<br>C104</td><td id="di4" class="CH CH-?">CH<br>?<br>HRS<br>A112</td><td id="mi4" class="E E-G3">E<br>G3<br>MOU<br>C2</td><td id="do4" class="KR KR-G2">KR<br>G2<br>CAL<br>C2</td><td id="fr4" class="SW SW-G3">SW<br>G3<br>WAI<br>C2</td>
+                    </tr>
+                    <tr class="sprow">
+                        <td colspan="6" class="gp">2. große Pause</td>
+                    </tr>
+                    <tr class="sprow">
+                        <td class="std">5.<br>(12:45 - 13:45)</td><td id="mo5" class="PH PH-G1">PH<br>G1<br>MOU<br>A108</td><td id="di5" class="PH PH-G1">PH<br>G1<br>MOU<br>A111</td><td id="mi5" class="CH CH-?">CH<br>?<br>HRS<br>A112</td><td id="do5" class="IF IF-L1">IF<br>L1<br>KEH<br>A201</td><td id="fr5" class="IF IF-L1">IF<br>L1<br>KEH<br>B201</td>
+                    </tr>
+                    <tr class="sprow">
+                        <td colspan="6" class="gp">Mittagspause</td>
+                    </tr>
+                    <tr class="sprow">
+                        <td class="std">6.<br>(14:15 - 15:15)</td><td id="mo6" class="none">-</td><td id="di6" class="none">-</td><td id="mi6" class="SW SW-?">SW<br>?<br>MAR<br>C106</td><td id="do6" class="D D-G1">D<br>G1<br>TRU<br>C206</td><td id="fr6" class="E E-G3">E<br>G3<br>MOU<br>C5</td>
+                    </tr>
+                    <tr class="sprow">
+                        <td class="std">7.<br>(15:20 - 16:20)</td><td id="mo7" class="none">-</td><td id="di7" class="none">-</td><td id="mi7" class="none">-</td><td id="do7" class="none">-</td><td id="fr7" class="none">-</td>
+                    </tr>
+                    <tr class="sprow">
+                        <td class="std">8.<br>(16:25 - 17:25)</td><td id="mo8" class="none">-</td><td id="di8" class="none">-</td><td id="mi8" class="none">-</td><td id="do8" class="none">-</td><td id="fr8" class="none">-</td>
+                    </tr>
+                </tbody></table>
+                <p id="akt">Letzte Aktualisierung: <br>22.02.2022 <br>7:08:06 Uhr | Stand: 25.02.2022 15:19</p><p id="pentf">Entfall</p><p id="peva">EVA</p><p id="praumw">Raumwechsel</p><p id="pfreis">Freisetzung</p><p id="pvertr">Vertretung</p>
+                <p id="kurs" style="display: none;">Q1</p>
+                <p id="vp1" style="display: none;">05a_2_KU_AK9-A103_Vertretung_05a,-05b,-05c,-05d,-05e_5_E-AN_A116_Vertretung_05b_4_SP_SH_Vertretung_06b_2_SP_TH_Vertretung_08b_5_KU_A107_Vertretung_08d_5_SP_Bad2-B204_Vertretung_08d_6_SP_---_Entfall_09a,-09b,-09c,-09d_4_F6_A101_Vertretung_09c_5_CH_A115_Vertretung_EF_1_PL-G2_C5_EVA_EF_1_SW-G2_C2-CK1_EVA_EF_1_KU-G5_A107_EVA_EF_1_SP-G2_SH_Vertretung_EF_1_BI-G2_A13_EVA_EF_2_L6-G1_C5_EVA_EF_2_SW-G3_C2-CK1_EVA_EF_2_PH-G3_A111_EVA_Q1_2_SW-G3_C104-C208_EVA_Q1_3_BI-G2_A13_EVA_Q1_4_CH-G1_A115_EVA_Q2_1_SW-G3_C104-A15_Raumwechsel_Q2_1_M-G4_C208_EVA_Q2_4_KU-G1_A107_EVA</p>
+                <p id="vp2" style="display: none;">05a_2_KU_AK9-A103_Vertretung_05a,-05b,-05c,-05d,-05e_5_E-AN_A116_Vertretung_05b_4_SP_SH_Vertretung_06b_2_SP_TH_Vertretung_08b_5_KU_A107_Vertretung_08d_5_SP_Bad2-B204_Vertretung_08d_6_SP_---_Entfall_09a,-09b,-09c,-09d_4_F6_A101_Vertretung_09c_5_CH_A115_Vertretung_EF_1_PL-G2_C5_EVA_EF_1_SW-G2_C2-CK1_EVA_EF_1_KU-G5_A107_EVA_EF_1_SP-G2_SH_Vertretung_EF_1_BI-G2_A13_EVA_EF_2_L6-G1_C5_EVA_EF_2_SW-G3_C2-CK1_EVA_EF_2_PH-G3_A111_EVA_Q1_2_SW-G3_C104-C208_EVA_Q1_3_BI-G2_A13_EVA_Q1_4_CH-G1_A115_EVA_Q2_1_SW-G3_C104-A15_Raumwechsel_Q2_1_M-G4_C208_EVA_Q2_4_KU-G1_A107_EVA</p>
+                </div>
+                <div style="display: none;" id="po" class="win" onclick="pohide()"><form id="profileoptions" method="post"><input type="submit" id="ao" name="ao" value="Einstellungen-teilweise"><input type="submit" id="lo" name="lo" value="Abmelden"></form></div>
+                <div style="display: none;" id="spo" class="win" onclick="spohide()"><form id="spoptions" method="post"><input type="submit" id="sh" name="sh" value="Stundenplan hochladen"><input type="submit" id="sb" name="sb" value="Bearbeiten"></form></div>
+                <div id="safeo"></div>
+                <div class="navbar showtitle"><form class="barform" method="post"><a href="https://wasserturmplan.steffenmolitor.de/index?reload" id="bearb">Neuladen</a><p id="titlenav">Stundenplan</p><input name="lo" type="submit" value="" id="leave"></form></div>
+                <div class="tabbar"><form class="barform" method="post"><input type="submit" name="sb" value="" id="StpbT"><label for="StpbT">Bearbeiten</label><input type="submit" value="" id="HomeT" class="curtab"><label class="curtab" for="HomeT">Stundenplan</label><input name="ao" type="submit" value="" id="EinstT"><label for="EinstT">Einstellungen</label></form></div>
+            <link rel="stylesheet" href="styleschlicht.css"><link rel="stylesheet" href="ff_0.css"><link rel="stylesheet" href="theme_dark.css">        <!-- Altes "Scroll-to-Reload"-Bild img src="images/reload.svg" id="reloadimg" !-->
+    <div id="safeo"></div>
+    <script>
+        //Bitte bring mich dafür nicht um :'(
+        if(document.getElementsByClassName("titlesch")[0] != null || document.getElementById("settitle") != null) {
+            setInterval(titlecheck,50);
+        }
+        function titlecheck() {
+            if(document.getElementsByClassName("titlesch")[0] != null) {
+                if(document.getElementsByClassName("navbar")[0] != null && document.getElementById("body").scrollTop >= document.getElementsByClassName("navbar")[0].clientHeight / 3 * 2) {
+                    document.getElementsByClassName("titlesch")[0].classList.remove("showtitle");
+                    document.getElementsByClassName("navbar")[0].classList.add("showtitle");
+                } else if(document.getElementsByClassName("navbar")[0] != null) {
+                    document.getElementsByClassName("navbar")[0].classList.remove("showtitle");
+                    document.getElementsByClassName("titlesch")[0].classList.add("showtitle");
+                }
+            } else if(document.getElementById("settitle") != null) {
+                if(document.getElementsByClassName("navbar")[0] != null && document.getElementById("body").scrollTop >= document.getElementsByClassName("navbar")[0].clientHeight / 3 * 2) {
+                    document.getElementById("settitle").classList.remove("showtitle");
+                    document.getElementsByClassName("navbar")[0].classList.add("showtitle");
+                } else if(document.getElementsByClassName("navbar")[0] != null) {
+                    document.getElementsByClassName("navbar")[0].classList.remove("showtitle");
+                    document.getElementById("settitle").classList.add("showtitle");
+                }
+            }
+        }
+    </script>
+    <script>
+        //Funktion um Fächerklassen für Farben und Vertretungsklassen für Badges zuzuweisen
+        function fachklassen() {
+            var tage = ["mo", "di", "mi", "do", "fr"];
+            if(document.getElementById("stundenplan") != null) {
+                var stds = [];
+                for(i = 1; i <= 8; i++) {
+                    for(j = 0; j < 5; j++) {
+                        stelle = j + (i - 1) * 5;
+                        stds[stelle] = tage[j] + i;
+                    }
+                }
+                for(i = 0; i < 40; i++) {
+                    fach = document.getElementById(stds[i]).innerHTML.split("<br>")[0].replace(/(\r\n|\n|\r)/gm, "");
+                    if(fach != "-" && fach != "Regen-") {
+                        document.getElementById(stds[i]).classList.add(fach);
+                    } else if(fach == "Regen-") {
+                        document.getElementById(stds[i]).classList.add("Regen");
+                    } else {
+                        document.getElementById(stds[i]).classList.add("none");
+                    }
+                    if((document.getElementById("kurs").innerHTML == "EF" || document.getElementById("kurs").innerHTML == "Q1" || document.getElementById("kurs").innerHTML == "Q2") && document.getElementById(stds[i]).innerHTML.split("<br>")[1] != null) {
+                        kurs = document.getElementById(stds[i]).innerHTML.split("<br>")[1].replace(/(\r\n|\n|\r)/gm, "");
+                        document.getElementById(stds[i]).classList.add(fach + "-" + kurs);
+                    }
+                }
+                if(document.getElementById("vp1") != null && document.getElementById("vp2") != null) {
+                    var tvp1 = document.getElementById("vp1").innerHTML.replace('"',"").split("_");
+                    var tvp2 = document.getElementById("vp2").innerHTML.replace('"',"").split("_");
+                    var vp1 = [];
+                    var vp2 = [];
+                    var n = 0;
+                    for(i = 0; i < tvp1.length / 5; i++) {
+                        temp = tvp1[i * 5 + n] + "." + tvp1[i * 5 + 1 + n] + "." + tvp1[i * 5 + 2 + n] + "." + tvp1[i * 5 + 3 + n] + "." + tvp1[i * 5 + 4 + n];
+                        if(tvp1[i * 5 + 5 + n] != null && !tvp1[i * 5 + 5 + n].includes("05") && !tvp1[i * 5 + 5 + n].includes("06") && !tvp1[i * 5 + 5 + n].includes("07") && !tvp1[i * 5 + 5 + n].includes("08") && !tvp1[i * 5 + 5 + n].includes("09") && tvp1[i * 5 + 5 + n] != "EF" && tvp1[i * 5 + 5 + n] != "Q1" && tvp1[i * 5 + 5 + n] != "Q2") {
+                            temp+= "." + tvp1[i * 5 + 5 + n];
+                            n++;
+                        }
+                        vp1[i] = temp;
+                    }
+                    n = 0;
+                    for(i = 0; i < tvp2.length / 5; i++) {
+                        temp = tvp2[i * 5 + n] + "." + tvp2[i * 5 + 1 + n] + "." + tvp2[i * 5 + 2 + n] + "." + tvp2[i * 5 + 3 + n] + "." + tvp2[i * 5 + 4 + n];
+                        if(tvp2[i * 5 + 5 + n] != null && !tvp2[i * 5 + 5 + n].includes("05") && !tvp2[i * 5 + 5 + n].includes("06") && !tvp2[i * 5 + 5 + n].includes("07") && !tvp2[i * 5 + 5 + n].includes("08") && !tvp2[i * 5 + 5 + n].includes("09") && tvp2[i * 5 + 5 + n] != "EF" && tvp2[i * 5 + 5 + n] != "Q1" && tvp2[i * 5 + 5 + n] != "Q2") {
+                            temp+= "." + tvp2[i * 5 + 5 + n];
+                            n++;
+                        }
+                        vp2[i] = temp;
+                    }
+                    for(i = 0; i < vp1.length; i++) {
+                        if(vp1[i].split(".")[0].includes(document.getElementById("kurs").innerHTML)) {
+                            if(vp1[i].split(".")[1].includes("-")) {
+                                ug = vp1[i].split(".")[1].split("---")[0];
+                                og = vp1[i].split(".")[1].split("---")[1];
+                            } else {
+                                ug = vp1[i].split(".")[1];
+                                og = vp1[i].split(".")[1]
+                            }
+                            for(j = ug; j <= og; j++) {
+                                if(document.getElementById(getDay(0) + j) != null && document.getElementById(getDay(0) + j).classList.contains(vp1[i].split(".")[2]) || vp1[i].split(".")[2] == "---" && vp1[i].split(".")[3] == "---") {
+                                    document.getElementById(getDay(0) + j).classList.add(vp1[i].split(".")[4]);
+                                    if(vp1[i].split(".")[4] != "Entfall" && vp1[i].split(".")[4] != "EVA" && vp1[i].split(".")[4] != "Raumwechsel" && vp1[i].split(".")[4] != "Freisetzung" && vp1[i].split(".")[4] != "Vertretung") {
+                                        document.getElementById(getDay(0) + j).innerHTML += "<BR>" + vp1[i].split(".")[4];
+                                    }
+                                    if(vp1[i].split(".")[5] != null) {
+                                        celltext = document.getElementById(getDay(0) + j).innerHTML;
+                                        celltextar = celltext.split("<br>");
+                                        celltextar[4] = "<span style='overflow: auto; display: block;'>" + vp1[i].split(".")[5] + "</span>";
+                                        celltext = celltextar.join("<BR>");
+                                        document.getElementById(getDay(0) + j).innerHTML = celltext;
+                                    }
+                                    if(vp1[i].split(".")[3].includes("-")) {
+                                        celltext = document.getElementById(getDay(0) + j).innerHTML;
+                                        celltextar = celltext.split("<br>");
+                                        celltextar[celltextar.length - 1] = "->" + vp1[i].split(".")[3].split("-")[1];
+                                        celltext = celltextar.join("<BR>");
+                                        document.getElementById(getDay(0) + j).innerHTML = celltext;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for(i = 0; i < vp2.length; i++) {
+                        if(vp2[i].split(".")[0].includes(document.getElementById("kurs").innerHTML)) {
+                            if(vp2[i].split(".")[1].includes("-")) {
+                                ug = vp2[i].split(".")[1].split("---")[0];
+                                og = vp2[i].split(".")[1].split("---")[1];
+                            } else {
+                                ug = vp2[i].split(".")[1];
+                                og = vp2[i].split(".")[1]
+                            }
+                            for(j = ug; j <= og; j++) {
+                                if(document.getElementById(getDay(1) + j) != null && document.getElementById(getDay(1) + j).classList.contains(vp2[i].split(".")[2]) || vp2[i].split(".")[2] == "---" && vp2[i].split(".")[3] == "---") {
+                                    document.getElementById(getDay(1) + j).classList.add(vp2[i].split(".")[4]);
+                                    if(vp2[i].split(".")[4] != "Entfall" && vp2[i].split(".")[4] != "EVA" && vp2[i].split(".")[4] != "Raumwechsel" && vp2[i].split(".")[4] != "Freisetzung" && vp2[i].split(".")[4] != "Vertretung") {
+                                        document.getElementById(getDay(1) + j).innerHTML += "<BR>" + vp2[i].split(".")[4];
+                                    }
+                                    if(vp2[i].split(".")[5] != null) {
+                                        celltext = document.getElementById(getDay(1) + j).innerHTML;
+                                        celltextar = celltext.split("<br>");
+                                        celltextar[4] = "<span style='overflow: auto; display: block;'>" + vp2[i].split(".")[5] + "</span>";
+                                        celltext = celltextar.join("<BR>");
+                                        document.getElementById(getDay(1) + j).innerHTML = celltext;
+                                    }
+                                    if(vp2[i].split(".")[3].includes("-")) {
+                                        celltext = document.getElementById(getDay(1) + j).innerHTML;
+                                        celltextar = celltext.split("<br>");
+                                        celltextar[celltextar.length - 1] = "->" + vp2[i].split(".")[3].split("-")[1];
+                                        celltext = celltextar.join("<BR>");
+                                        document.getElementById(getDay(1) + j).innerHTML = celltext;
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        //Ladeanimation stoppen
+        var loadInt;
+        function stopload() {
+            document.getElementById("loadani").outerHTML = "";
+        }
+        function loadop() {
+            if(document.getElementById("loadani").style.opacity > 0) {
+                document.getElementById("loadani").style.opacity -= 0.01;
+            } else {
+                document.getElementById("loadani").style.display = "none";
+                document.getElementById("loadani").outerHTML = "";
+                clearInterval(loadInt);
+            }
+        }
+        function stoploadslow() {
+            document.getElementById("loadani").style.backgroundColor = "black";
+            document.getElementById("loadani").style.opacity = 1;
+            setTimeout(function () {loadInt = setInterval(loadop,10);},700);
+        }
+        //Funktion zum Anzeigen des Dateinamen beim Upload
+        function filefunc() {
+            if(document.getElementById("file").value != "") {
+                var filen = document.getElementById("file").value;
+                document.getElementById("filel").innerHTML = filen.replace("C:\\fakepath\\","");
+            } else {
+                document.getElementById("filel").innerHTML = "Datei auswählen";
+            }
+        }
+
+        //Funktion um Output-Elemente zu löschen (Geht nicht joa fuck)
+        function destroy(elem) {
+            function elemdel(elem) {
+                elem.outerHTML = "";
+            }
+            setTimeout(elemdel(elem), 5000);
+        }
+        function sel(elem) {
+            if(elem.classList.contains("selected")) {
+                elem.classList.remove("selected");
+                values = document.getElementById("sellist").value.split(",");
+                values.splice(values.indexOf(elem.id), 1);
+                document.getElementById("sellist").value = values.join(",");
+                if(values.length <= 0) {
+                    document.getElementById("cellbearb").classList.add("gray");
+                    document.getElementById("cellfrei").classList.add("gray");
+                    document.getElementById("cellbearb").disabled = true;
+                    document.getElementById("cellfrei").disabled = true;
+                }
+            } else {
+                elem.classList.add("selected");
+                if(document.getElementById("sellist").value == "") {
+                    document.getElementById("sellist").value = elem.id;
+                } else {
+                    document.getElementById("sellist").value += "," + elem.id;
+                }
+                document.getElementById("cellbearb").classList.remove("gray");
+                document.getElementById("cellfrei").classList.remove("gray");
+                document.getElementById("cellbearb").disabled = false;
+                document.getElementById("cellfrei").disabled = false;
+            }
+        }
+
+        //Ehemalige "Scroll-to-Reload"-Funktion weil idk vllt iwann mal wieder
+        /*var lss;
+        var sreload = false;
+        window.addEventListener("scroll", function(){
+            if(window.scrollY < -350) {
+                sreload = true;
+            }
+        });
+        window.addEventListener("scroll", function(){
+            if(window.scrollY <= -350) {
+                document.getElementById("reloadimg").style.opacity = 1;
+                window.navigator.vibrate(200);
+            } else if(window.scrollY < -200) {
+                document.getElementById("reloadimg").style.display = "block";
+                document.getElementById("reloadimg").style.opacity = (window.scrollY * (-1) - 200) / 150;
+                if(document.getElementById("reloadimg").style.opacity > 0.75) {
+                    document.getElementById("reloadimg").style.opacity = 0.75;
+                }
+            } else if(window.scrollY > -10){
+                document.getElementById("reloadimg").style.opacity = 0;
+                document.getElementById("reloadimg").style.display = "none";
+            } else {
+                document.getElementById("reloadimg").style.opacity = 0;
+            }
+        });
+        window.addEventListener("scroll", function(){
+            if(window.scrollY > -200 && sreload) {
+                document.location.reload();
+                sreload = false;
+            }
+            lss = window.scrollY;
+        });*/
+        //Tag(Heute) + Tage (für Vertretungsplanabruf)
+        function getDay(n) {
+            var today = new Date();
+            var day = today.getDay() + n;
+            if(day == 6 || day == 0 || day == 1) {
+                return "mo";
+            } else if(day == 2) {
+                return "di";
+            } else if(day == 3) {
+                return "mi";
+            } else if(day == 4) {
+                return "do";
+            } else if(day == 5) {
+                return "fr";
+            }
+        }
+
+        //Ehemalige Menüaufruf-Funktionen
+        /*function profile() {
+            document.getElementById("po").style.display = "block";
+        }
+        function pohide() {
+            document.getElementById("po").style.display = "none";
+        }
+        function sp() {
+            document.getElementById("spo").style.display = "block";
+        }
+        function spohide() {
+            document.getElementById("spo").style.display = "none";
+        }*/
+    </script>
+
+
+</body></html>

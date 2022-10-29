@@ -1,0 +1,85 @@
+.M {
+    background-color:rgba(10, 132, 255, 1);
+    font-weight: bolder;
+}
+.D, .RHE {
+    background-color:rgba(255, 69, 58, 1);
+    font-weight: bolder;
+}
+.PH {
+    background-color:rgba(102, 212, 207, 1);
+    font-weight: bolder;
+}
+.KR, .ER, .PP, .PPL, .PL, .SL {
+    background-color:rgba(99, 99, 102, 1);
+    font-weight: bolder;
+}
+.CH {
+    background-color:rgba(80, 210, 130, 1);
+    font-weight: bolder;
+}
+.IF8, .IF0, .IF, .MK {
+    background-color:rgba(100, 210, 255, 1);
+    font-weight: bolder;
+}
+.SW, .PK, .P, .WP {
+    background-color:rgba(255, 159, 10, 1);
+    font-weight: bolder;
+}
+.SP {
+    background-color:rgba(191, 90, 242, 1);
+    font-weight: bolder;
+}
+.KU {
+    background-color:rgba(230, 35, 180, 1);
+    font-weight: bolder;
+}
+.E5, .E {
+    background-color:rgba(255, 214, 10, 1);
+    font-weight: bolder;
+}
+.GE {
+    background-color:rgba(145, 101, 30, 1);
+    font-weight: bolder;
+}
+.BI, .NW {
+    background-color:rgba(48, 209, 88, 1);
+    font-weight: bolder;
+}
+.EK {
+    background-color:rgba(172, 142, 104, 1);
+    font-weight: bolder;
+}
+.S8, .S0, .S {
+    background-color:rgba(235, 195, 60, 1);
+    font-weight: bolder;
+}
+.MU {
+    background-color:rgba(200, 119, 30, 1);
+    font-weight: bolder;
+}
+.F7, .F0, .F6, .L7, .L6, .L, .F, .G, .G0, .G1 {
+    background-color:rgba(132, 0, 255, 1);
+    font-weight: bolder;
+}
+.Cambridge {
+    background-color:rgba(242, 0, 255, 1);
+}
+
+.Regen {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 1) 0%,
+        rgba(255, 154, 0, 1) 10%,
+        rgba(208, 222, 33, 1) 20%,
+        rgba(79, 220, 74, 1) 30%,
+        rgba(63, 218, 216, 1) 40%,
+        rgba(47, 201, 226, 1) 50%,
+        rgba(28, 127, 238, 1) 60%,
+        rgba(95, 21, 242, 1) 70%,
+        rgba(186, 12, 248, 1) 80%,
+        rgba(251, 7, 217, 1) 90%,
+        rgba(255, 0, 0, 1) 100%
+    );
+    font-weight: bolder;
+} 

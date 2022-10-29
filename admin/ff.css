@@ -1,0 +1,65 @@
+.M {
+    background-color:rgba(74, 76, 183, 0.575);
+}
+.D, .RHE {
+    background-color:rgba(171, 58, 58, 0.575);
+}
+.PH {
+    background-color:rgba(81, 168, 174, 0.575);
+}
+.KR, .ER, .PP, .PPL, .PL, .SL {
+    background-color:rgba(141, 141, 141, 0.575);
+}
+.CH {
+    background-color:rgba(62, 211, 129, 0.575);
+}
+.IF8, .IF0, .IF, .MK {
+    background-color:rgba(71, 135, 177, 0.575);
+}
+.SW, .PK, .P, .WP {
+    background-color:rgba(213, 154, 66, 0.575);
+}
+.SP {
+    background-color:rgba(105, 105, 105, 0.575);
+}
+.KU {
+    background-color:rgba(201, 82, 185, 0.575);
+}
+.E5, .E {
+    background-color:rgba(208, 199, 67, 0.575);
+}
+.GE {
+    background-color:rgba(223, 130, 86, 0.575);
+}
+.BI, .NW {
+    background-color:rgba(89, 211, 95, 0.575);
+}
+.EK {
+    background-color:rgba(108, 68, 41, 0.575);
+}
+.S8, .S0, .S {
+    background-color:rgba(177, 194, 80, 0.575);
+}
+.MU {
+    background-color:rgba(157, 124, 74, 0.575);
+}
+.F7, .F0, .F6, .L7, .L6, .L, .F, .G, .G0, .G1 {
+    background-color:rgba(134, 75, 189, 0.575);
+}
+
+.Regen {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 69, 58, 1) 0%,
+        rgba(255, 159, 10, 1) 10%,
+        rgba(255, 214, 10, 1) 20%,
+        rgba(48, 209, 88, 1) 30%,
+        rgba(102, 212, 207, 1) 40%,
+        rgba(64, 200, 224, 1) 50%,
+        rgba(10, 132, 255, 1) 60%,
+        rgba(94, 92, 230, 1) 70%,
+        rgba(191, 90, 242, 1) 80%,
+        rgba(255, 55, 95, 1) 90%,
+        rgba(255, 69, 58, 1) 100%
+    );
+} 
